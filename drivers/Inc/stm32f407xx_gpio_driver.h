@@ -39,7 +39,7 @@ typedef struct
 
 
 /*
- * @GPIO_PIN_NUMBERS
+ * @GPIO_PIN_NUMBER
  * GPIO pin numbers
  */
 #define GPIO_PIN_NO_0  				0
