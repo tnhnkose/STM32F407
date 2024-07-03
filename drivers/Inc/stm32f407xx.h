@@ -9,7 +9,40 @@
 #define INC_STM32F407XX_H_
 
 #include<stdint.h>
+
 #define __vo volatile
+
+
+/**********************************START:Processor Specific Details **********************************/
+/*
+ * ARM Cortex Mx Processor NVIC ISERx register Addresses
+ */
+
+#define NVIC_ISER0          ( (__vo uint32_t*)0xE000E100 )
+#define NVIC_ISER1          ( (__vo uint32_t*)0xE000E104 )
+#define NVIC_ISER2          ( (__vo uint32_t*)0xE000E108 )
+#define NVIC_ISER3          ( (__vo uint32_t*)0xE000E10c )
+
+
+/*
+ * ARM Cortex Mx Processor NVIC ICERx register Addresses
+ */
+#define NVIC_ICER0 			((__vo uint32_t*)0XE000E180)
+#define NVIC_ICER1			((__vo uint32_t*)0XE000E184)
+#define NVIC_ICER2  		((__vo uint32_t*)0XE000E188)
+#define NVIC_ICER3			((__vo uint32_t*)0XE000E18C)
+
+
+/*
+ * ARM Cortex Mx Processor Priority Register Address Calculation
+ */
+#define NVIC_PR_BASE_ADDR 	((__vo uint32_t*)0xE000E400)
+
+/*
+ * ARM Cortex Mx Processor number of priority bits implemented in Priority Register
+ */
+#define NO_PR_BITS_IMPLEMENTED  4
+
 /*
  * Base Addresses of SRAM and FLASH memories
  */
@@ -280,12 +313,52 @@ typedef struct
 
 
 
-#define GPIO_BASE_ADDR_TO_CODE(x)    ( x == GPIOA) ? 0:\
+#define GPIO_BASE_ADDR_TO_CODE(x)   (( x == GPIOA) ? 0:\
 									 ( x == GPIOB) ? 1:\
 									 ( x == GPIOC) ? 2:\
 									 ( x == GPIOD) ? 3:\
 									 ( x == GPIOE) ? 4:\
-									 ( x == GPIOF) ? 5:	\
+									 ( x == GPIOF) ? 5:\
+									 ( x == GPIOG) ? 6:\
+	   						         ( x == GPIOH) ? 7:\
+									 ( x == GPIOI) ? 8:0)
+
+
+
+/*
+ * IRQ(Interrupt Request) Numbers of STM32F407x MCU
+ * NOTE: update these macros with valid values according to your MCU
+ * TODO: You may complete this list for other peripherals
+ */
+
+#define IRQ_NO_EXTI0 		6
+#define IRQ_NO_EXTI1 		7
+#define IRQ_NO_EXTI2 		8
+#define IRQ_NO_EXTI3 		9
+#define IRQ_NO_EXTI4 		10
+#define IRQ_NO_EXTI9_5 		23
+#define IRQ_NO_EXTI15_10 	40
+#define IRQ_NO_SPI1			35
+#define IRQ_NO_SPI2         36
+#define IRQ_NO_SPI3         51
+#define IRQ_NO_SPI4
+#define IRQ_NO_I2C1_EV     31
+#define IRQ_NO_I2C1_ER     32
+#define IRQ_NO_USART1	    37
+#define IRQ_NO_USART2	    38
+#define IRQ_NO_USART3	    39
+#define IRQ_NO_UART4	    52
+#define IRQ_NO_UART5	    53
+#define IRQ_NO_USART6	    71
+
+
+/*
+ * macros for all the possible priority levels
+ */
+#define NVIC_IRQ_PRI0    0
+#define NVIC_IRQ_PRI15    15
+
+
 /*
  * Some generic macros
  */
