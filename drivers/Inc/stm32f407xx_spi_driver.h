@@ -88,8 +88,8 @@ typedef struct
  * @SPI_CPHA
  */
 
-#define SPI_CPOL_HIGH 			1
-#define SPI_CPOL_LOW			0
+#define SPI_CPHA_HIGH 			1
+#define SPI_CPHA_LOW			0
 
 /*
  * @SPI_SSM
@@ -137,8 +137,13 @@ void SPI_IRQPriorityConfig(uint8_t IRQNumber, uint32_t IRQPriority);
 void SPI_IRQHandling(SPI_Handle_t *pHandle);
 
 
+/*
+ * Other peripheral Control APIs
+ */
 
-
+void SPI_PeripheralControl(SPI_RegDef_t *pSPIx,uint8_t EnorDi);
+void SPI_SSIConfig(SPI_RegDef_t *pSPIx,uint8_t EnorDi);
+void SPI_OE(SPI_RegDef_t *pSPIx,uint8_t EnorDi);
 
 
 

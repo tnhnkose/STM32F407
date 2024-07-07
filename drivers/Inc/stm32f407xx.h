@@ -240,14 +240,15 @@ typedef struct
 
 typedef struct
 {
-		__vo uint32_t CR[2];     /*!< control register,          	  		        Address offset: 0x00-oxo4 */
-		__vo uint32_t SR;	     /*!< ststus register							    Address offset: 0x08 */
-		__vo uint32_t DR;  		 /*!< data register, 								Address offset: 0x0C */
-		__vo uint32_t CRCPR;   	 /*!< polynominal regiter,  					    Address offset: 0x10 */
-		__vo uint32_t RXCRCR;    /*!< rc crc register,                   		    Address offset: 0x14 */
-		__vo uint32_t TXCRCR;    /*!< tx crc register,                   		    Address offset: 0x18 */
-		__vo uint32_t I2SCFGR;   /*!< rc crc register,                   		    Address offset: 0x1C */
-		__vo uint32_t I2SPR;     /*!< tx crc register,                   		    Address offset: 0x20 */
+	__vo uint32_t CR1;        /*!< TODO,     										Address offset: 0x00 */
+	__vo uint32_t CR2;        /*!< TODO,     										Address offset: 0x04 */
+	__vo uint32_t SR;         /*!< TODO,     										Address offset: 0x08 */
+	__vo uint32_t DR;         /*!< TODO,     										Address offset: 0x0C */
+	__vo uint32_t CRCPR;      /*!< TODO,     										Address offset: 0x10 */
+	__vo uint32_t RXCRCR;     /*!< TODO,     										Address offset: 0x14 */
+	__vo uint32_t TXCRCR;     /*!< TODO,     										Address offset: 0x18 */
+	__vo uint32_t I2SCFGR;    /*!< TODO,     										Address offset: 0x1C */
+	__vo uint32_t I2SPR;      /*!< TODO,     										Address offset: 0x20 */
 
 }SPI_RegDef_t;
 
