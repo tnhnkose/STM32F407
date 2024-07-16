@@ -163,6 +163,10 @@ typedef struct
 #define SPI2 				((SPI_RegDef_t*)SPI2_BASEADDR)
 #define SPI3 				((SPI_RegDef_t*)SPI3_BASEADDR)
 
+#define I2C1 				((I2C_RegDef_t*)I2C1_BASEADDR)
+#define I2C2 				((I2C_RegDef_t*)I2C2_BASEADDR)
+#define I2C3 				((I2C_RegDef_t*)I2C3_BASEADDR)
+
 /*
  * peripheral register definition structure for RCC
  */
@@ -253,6 +257,23 @@ typedef struct
 	__vo uint32_t I2SPR;      /*!< TODO,     										Address offset: 0x20 */
 
 }SPI_RegDef_t;
+
+
+typedef struct
+{
+	__vo uint32_t CR1;        	/*!< TODO,     										Address offset: 0x00 */
+	__vo uint32_t CR2;          /*!< TODO,     										Address offset: 0x04 */
+	__vo uint32_t OAR1;    	    /*!< TODO,     										Address offset: 0x08 */
+	__vo uint32_t OAR2;         /*!< TODO,     										Address offset: 0x0C */
+	__vo uint32_t DR;      		/*!< TODO,     										Address offset: 0x10 */
+	__vo uint32_t SR1;     		/*!< TODO,     										Address offset: 0x14 */
+	__vo uint32_t SR2;     		/*!< TODO,     										Address offset: 0x18 */
+	__vo uint32_t CCR;    		/*!< TODO,     										Address offset: 0x1C */
+	__vo uint32_t TRISE;      	/*!< TODO,     										Address offset: 0x20 */
+	__vo uint32_t FLTR;      	/*!< TODO,     										Address offset: 0x24 */
+
+
+}I2C_RegDef_t;
 
 
 /*
@@ -447,9 +468,104 @@ typedef struct
 
 
 
+/******************************************************************************************
+ *Bit position definitions of I2C peripheral
+ ******************************************************************************************/
 
+#define I2C_CR1_PE				0
+#define I2C_CR1_SMBUS			1
+#define I2C_CR1_RESERVED1		2
+#define I2C_CR1_SMBTYPE			3
+#define I2C_CR1_ENARP			4
+#define I2C_CR1_ENPEC			5
+#define I2C_CR1_ENGC			6
+#define I2C_CR1_NOSTRETCH		7
+#define I2C_CR1_START			8
+#define I2C_CR1_STOP			9
+#define I2C_CR1_ACK				10
+#define I2C_CR1_POS				11
+#define I2C_CR1_PEC				12
+#define I2C_CR1_ALERT			13
+#define I2C_CR1_RESERVED2		14
+#define I2C_CR1_SWRST			15
+
+/*
+ * Bit position definitions I2C_CR2
+ */
+#define I2C_CR2_FREQ0			0
+#define I2C_CR2_FREQ1			1
+#define I2C_CR2_FREQ2			2
+#define I2C_CR2_FREQ3			3
+#define I2C_CR2_FREQ4			4
+#define I2C_CR2_FREQ5			5
+#define I2C_CR2_ITERREN			8
+#define I2C_CR2_ITEVTEN			9
+#define I2C_CR2_ITBUFEN			10
+#define I2C_CR2_DMAEN			11
+#define I2C_CR2_LAST			12
+
+
+
+/*
+ * Bit position definitions I2C_SR1
+ */
+#define I2C_SR1_SB						0
+#define I2C_SR1_ADDR			 		1
+#define I2C_SR1_BTF				 		2
+#define I2C_SR1_ADD10				 	3
+#define I2C_SR1_STOPF				 	4
+#define I2C_SR1_RXNE				 	6
+#define I2C_SR1_TXE				 		7
+#define I2C_SR1_BERR					8
+#define I2C_SR1_ARLO					9
+#define I2C_SR1_AF					 	10
+#define I2C_SR1_OVR				 		11
+#define I2C_SR1_PECERR					12
+#define I2C_SR1_TIMEOUT				 	14
+#define I2C_SR1_SMBALERT			 	15
+
+
+
+/*
+ * Bit position definitions I2C_SR2
+ */
+#define I2C_SR2_MSL						0
+#define I2C_SR2_BUSY			 		1
+#define I2C_SR2_TRA			 			2
+#define I2C_SR2_GENCALL				 	4
+#define I2C_SR2_SMBDEFAULT				5
+#define I2C_SR1_SMBHOST				 	6
+#define I2C_SR1_DUALF				 	7
+#define I2C_SR1_PEC0					8
+#define I2C_SR1_PEC1					9
+#define I2C_SR1_PEC2				 	10
+#define I2C_SR1_PEC3			 		11
+#define I2C_SR1_PEC4					12
+#define I2C_SR1_PEC5				 	13
+#define I2C_SR1_PEC6					14
+#define I2C_SR1_PEC7					15
+
+
+/*
+ * Bit position definitions I2C_CCR
+ */
+#define I2C_CCR_CCR0					0
+#define I2C_CCR_CCR1			 		1
+#define I2C_CCR_CCR2			 		2
+#define I2C_CCR_CCR3				 	3
+#define I2C_CCR_CCR4					4
+#define I2C_CCR_CCR5				 	5
+#define I2C_CCR_CCR6				 	6
+#define I2C_CCR_CCR7					7
+#define I2C_CCR_CCR8					8
+#define I2C_CCR_CCR9				 	9
+#define I2C_CCR_CCR10			 		10
+#define I2C_CCR_CCR11					11
+#define I2C_CCR_DUTY				 	14
+#define I2C_CCR_FS						15
 
 #include "stm32f407xx_gpio_driver.h"
 #include "stm32f407xx_spi_driver.h"
+#include "stm32f4xx_i2c_driver.h"
 
 #endif /* INC_STM32F407XX_H_ */

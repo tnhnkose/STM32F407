@@ -199,14 +199,14 @@ void SPI_SendData(SPI_RegDef_t *pSPIx, uint8_t *pTxBuffer, uint32_t Len)
 			{
 				// 16 bit DFF bit in CR1
 				// 1. load data into data register
-				pSPIx->DR = ((uint16_t*)pTxBuffer);
+				pSPIx->DR = *((uint16_t*)pTxBuffer);
 				Len--;
 				Len--;
 				(uint16_t*)pTxBuffer++;
 			}
 			else
 			{
-				pSPIx->DR = ((uint8_t*)pTxBuffer);
+				pSPIx->DR = *((uint8_t*)pTxBuffer);
 				Len--;
 				pTxBuffer++;
 			}
@@ -452,7 +452,7 @@ uint8_t SPI_SendDataIT(SPI_Handle_t *pSPIHandle, uint8_t *pTxBuffer, uint32_t Le
 
 }
 
-void SPI_ReceiveDataIT(SPI_Handle_t *pSPIHandle, uint8_t *pRxBuffer, uint32_t Len)
+uint8_t SPI_ReceiveDataIT(SPI_Handle_t *pSPIHandle, uint8_t *pRxBuffer, uint32_t Len)
 {
 		uint8_t state = pSPIHandle->RxState;
 
@@ -463,7 +463,7 @@ void SPI_ReceiveDataIT(SPI_Handle_t *pSPIHandle, uint8_t *pRxBuffer, uint32_t Le
 			pSPIHandle->RxLen = Len;
 
 			// made sp, state as busy
-			pSPIHandle->RxState = SPI_BUSY_IN_RXX;
+			pSPIHandle->RxState = SPI_BUSY_IN_RX;
 
 			//enable the RXNEIE control bit to get interrupt whenever TXE flag is set in SR
 			pSPIHandle->pSPIx->CR2 |= (1 << SPI_CR2_RXNEIE);
@@ -540,7 +540,7 @@ static void spi_txe_interrupt_handle(SPI_Handle_t *pSPIHandle)
 	{
 		// 16 bit DFF bit in CR1
 		// 1. load data into data register
-		pSPIHandle->pSPIx->DR = ((uint16_t*)pSPIHandle->pTxBuffer);
+		pSPIHandle->pSPIx->DR = *((uint16_t*)pSPIHandle->pTxBuffer);
 		pSPIHandle->TxLen--;
 		pSPIHandle->TxLen--;
 		(uint16_t*)pSPIHandle->pTxBuffer++;
@@ -573,18 +573,20 @@ static void spi_rxne_interrupt_handle(SPI_Handle_t *pSPIHandle)
 	{
 		// 16 bit DFF bit in CR1
 		// 1. load data into data register
-		pSPIHandle->pSPIx->DR = ((uint16_t*)pSPIHandle->pRxBuffer);
-		pSPIHandle->RxLen--;
-		pSPIHandle->RxLen--;
-		(uint16_t*)pSPIHandle->pRxBuffer++;
+		//16 bit
+		*((uint16_t*)pSPIHandle->pRxBuffer) = (uint16_t) pSPIHandle->pSPIx->DR;
+		pSPIHandle->RxLen -= 2;
+		pSPIHandle->pRxBuffer++;
+		pSPIHandle->pRxBuffer++;
 	}
 	else
 	{
-		// 8 bit  DFF
-		pSPIHandle->pSPIx->DR = *pSPIHandle->pRxBuffer;
+		//8 bit
+		*(pSPIHandle->pRxBuffer) = (uint8_t) pSPIHandle->pSPIx->DR;
 		pSPIHandle->RxLen--;
-		(uint16_t*)pSPIHandle->pRxBuffer++;
+		pSPIHandle->pRxBuffer++;
 	}
+
 
 	if(! pSPIHandle->RxLen)
 	{
@@ -600,7 +602,7 @@ static void spi_ovr_err_interrupt_handle(SPI_Handle_t *pSPIHandle)
 {
 
 	// clear ovr flag
-	if(pSPIHandle->pSPIx != SPI_BUSY_IN_TX)
+	if(pSPIHandle->TxState != SPI_BUSY_IN_TX)
 	{
 		SPI_ClearOVRFlag(pSPIHandle->pSPIx);
 	}
@@ -628,8 +630,8 @@ void SPI_CloseReception(SPI_Handle_t *pSPIHandle)
 void SPI_ClearOVRFlag(SPI_RegDef_t *pSPIx)
 {
 	uint8_t temp;
-	temp = pSPIHandle->pSPIx->DR;
-	temp = pSPIHandle->pSPIx->SR;
+	temp = pSPIx->DR;
+	temp = pSPIx->SR;
 	(void)temp;
 }
 
